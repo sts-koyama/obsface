@@ -1,8 +1,12 @@
 .card {
-  margin-bottom : 30px;
+  margin-bottom: 30px;
 }
 
 span.card-date {
   text-align: right;
+  font-size: 10pt;
+}
+
+span.card-like {
   font-size: 10pt;
 }

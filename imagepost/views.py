@@ -35,10 +35,9 @@ def loginview(request):
   return render(request, 'login.html')
 
 
-@login_required
 def logoutview(request):
   logout(request)
-  return redirect('login')
+  return redirect('list')
 
 
 def listview(request):
@@ -49,6 +48,18 @@ def listview(request):
 def detailview(request, pk):
   object_detail = ImageTable.objects.get(pk=pk)
   return render(request, 'detail.html', {'object': object_detail})
+
+
+def likebtnview(request, pk):
+  post = ImageTable.objects.get(pk=pk)
+  author_name = request.user.get_username() + str(request.user.id)
+  if request.user.is_authenticated and author_name in post.useful_review_record:
+    return redirect('list')
+  else:
+    post.useful_review += 1
+    post.useful_review_record += author_name
+    post.save()
+    return redirect('list')
 
 
 class CreateClass(CreateView):
