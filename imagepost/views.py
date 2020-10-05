@@ -1,7 +1,12 @@
 from django.db import IntegrityError
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+
+from .models import ImageTable
 
 
 def signupview(request):
@@ -28,3 +33,26 @@ def loginview(request):
     else:
       return redirect('login')
   return render(request, 'login.html')
+
+
+@login_required
+def logoutview(request):
+  logout(request)
+  return redirect('login')
+
+
+def listview(request):
+  object_list = ImageTable.objects.all().order_by('-post_date')
+  return render(request, 'list.html', {'object_list': object_list})
+
+
+def detailview(request, pk):
+  object_detail = ImageTable.objects.get(pk=pk)
+  return render(request, 'detail.html', {'object': object_detail})
+
+
+class CreateClass(CreateView):
+  template_name = 'create.html'
+  model = ImageTable
+  fields = ('title', 'content', 'author', 'images', 'evaluation')
+  success_url = reverse_lazy('list')

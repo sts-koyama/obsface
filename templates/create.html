@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<form action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+  <p>title: <input type="text" name="title"></p>
+  <p>content: <input type="text" name="content"></p>
+  <p>image: <input type="file" name="iamge"></p>
+  <p>evaluation:</p>
+  <select name="evaluation">
+    <option value="Good">Good</option>
+    <option value="Bad">Bad</option>
+  </select>
+  <input type="hidden" name="author" value="{{ user.id }}">
+  <input type="submit" value="upload">
+</form>
+{% else %}
+Please log in.
+<a href="{% url 'login' %}" class="btn btn-primary" role="button" aria-pressed="true">Login</a>
+{% endif %}
+
+{% endblock content %}
