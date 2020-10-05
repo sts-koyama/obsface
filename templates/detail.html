@@ -18,7 +18,7 @@
       <h5 class="card-title">reviewer: {{ object.author }}</h5>
       <h5 class="card-title">comment: {{ object.content }}</h5>
       <h5 class="card-title">evaluation: {{ object.evaluation }}</h5>
-      <h5 class="card-title">{{ object.useful_review}} liked this review.</h5>
+      <h5 class="card-title">{{ object.useful_review}} liked this post.</h5>
       <a href="{% url 'likebtn' object.pk %}" class="btn btn-primary">like</a>
     </div>
   </div>

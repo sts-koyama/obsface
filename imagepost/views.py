@@ -7,6 +7,7 @@ from django.views.generic import CreateView
 from django.urls import reverse_lazy
 
 from .models import ImageTable
+from .forms import ImageForm
 
 
 def signupview(request):
@@ -62,8 +63,8 @@ def likebtnview(request, pk):
     return redirect('list')
 
 
-class CreateClass(CreateView):
-  template_name = 'create.html'
+class CreateImagePost(CreateView):
   model = ImageTable
-  fields = ('title', 'content', 'author', 'images', 'evaluation')
+  form_class = ImageForm
+  template_name = 'upload.html'
   success_url = reverse_lazy('list')
